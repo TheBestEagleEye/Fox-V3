@@ -131,7 +131,7 @@ class FIFO(commands.Cog):
     async def _remove_job(self, task: Task):
         return self.scheduler.remove_job(job_id=_assemble_job_id(task.name, task.guild_id))
 
-    @checks.is_owner()
+    @checks.mod_or_permissions(administrator=True)
     @commands.guild_only()
     @commands.command()
     async def fifoclear(self, ctx: commands.Context):
@@ -142,7 +142,7 @@ class FIFO(commands.Cog):
         await self.config.jobs_index.clear()
         await ctx.tick()
 
-    @checks.is_owner()  # Will be reduced when I figure out permissions later
+    @checks.mod_or_permissions(administrator=True)  # Will be reduced when I figure out permissions later
     @commands.guild_only()
     @commands.group()
     async def fifo(self, ctx: commands.Context):
